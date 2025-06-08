@@ -60,6 +60,24 @@ mini-twitter/
     └── images/
 ```
 
+## Capturas de Tela
+
+Abaixo estão algumas telas da aplicação em funcionamento:
+
+### Desktop
+<p align="center">
+  <img src="./screenshots/desktop/login-view.png" alt="Tela de Login" width="400" />
+  <img src="./screenshots/desktop/register-view.png" alt="Tela de Cadastro" width="400" />
+  <img src="./screenshots/desktop/feed-view.png" alt="Feed de Postagens" width="400" />
+</p>
+
+### Mobile
+<p align="center">
+  <img src="./screenshots/mobile/login-view.png" alt="Tela de Login" width="220" />
+  <img src="./screenshots/mobile/register-view.png" alt="Tela de Cadastro" width="220" />
+  <img src="./screenshots/mobile/feed-view.png" alt="Feed de Postagens" width="220" />
+</p>
+
 ## Dicas
 - Para melhor experiência, utilize o projeto em tela cheia ou em dispositivos móveis.
 - Caso a API esteja fora do ar, tente novamente mais tarde.
