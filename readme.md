@@ -26,7 +26,7 @@ Mini Twitter é uma aplicação web desenvolvida com HTML, CSS e JavaScript puro
 1. **Clone ou baixe este repositório:**
    - Via terminal:
      ```bash
-     git clone https://github.com/seu-usuario/mini-twitter.git
+     git clone https://github.com/Hadaward/mini-twitter.git
      ```
    - Ou faça o download do ZIP pelo GitHub e extraia os arquivos.
 
