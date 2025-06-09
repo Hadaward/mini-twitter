@@ -3,6 +3,7 @@ import { PostRepository } from "../repositories/PostRepository.js";
 import { StorageRepository } from "../repositories/StorageRepository.js";
 import { FeedView } from "../views/FeedView.js";
 import { AuthController } from "./AuthController.js";
+import { ProfileController } from "./ProfileController.js";
 
 export class PostController {
     /**
@@ -26,6 +27,7 @@ export class PostController {
     #feedView;
 
     #lastPostResponseSize = 0;
+    #isVisible = false;
 
     constructor(container) {
         this.container = container;
@@ -37,9 +39,16 @@ export class PostController {
     handleLogout() {
         this.storageRepository.clear();
         new AuthController(this.container).showLoginView();
+        this.#isVisible = false;
+    }
+
+    async showProfile() {
+        await new ProfileController(this.container).showProfileView();
+        this.#isVisible = false;
     }
 
     async showFeedView() {
+        this.#isVisible = true;
         const token = this.storageRepository.getItem('token');
         if (!token) return location.reload();
 
@@ -68,6 +77,7 @@ export class PostController {
     }
 
     async #watchNewPosts() {
+        if (!this.#isVisible) return;
         const token = this.storageRepository.getItem('token');
         if (!token) return location.reload();
 

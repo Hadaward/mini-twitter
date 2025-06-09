@@ -113,10 +113,18 @@ export class FeedView {
         logoutButton.addEventListener('click', () => this.controller.handleLogout());
 
         const profileButton = this.controller.container.querySelector('.profile-btn');
-        profileButton.addEventListener('click', () => this.controller.showProfile());
+        profileButton.addEventListener('click', async () => await this.controller.showProfile());
 
         const publishButton = this.controller.container.querySelector('.publish-btn');
         publishButton.addEventListener('click', this.onSubmitPost.bind(this));
+
+        const tryAgainButton = this.controller.container.querySelector('.try-again');
+        tryAgainButton.addEventListener('click', async () => {
+            const errorMessageElement = this.controller.container.querySelector('.error-message');
+            errorMessageElement.classList.add('hidden');
+
+            await this.controller.loadPosts();
+        });
 
         const postContent = this.controller.container.querySelector('.new-post-input');
         const charCount = this.controller.container.querySelector('.char-count');
