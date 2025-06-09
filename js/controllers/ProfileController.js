@@ -46,7 +46,10 @@ export class ProfileController {
             const result = await this.userRepository.updateProfile(token, data.username, data.email);
             if (result.ok) {
                 this.#profileView.render(result.user);
-                this.storageRepository.setItem('user', JSON.stringify(result.user));
+                this.storageRepository.setItem('user', JSON.stringify({
+                    id: result.user._id,
+                    ...result.user
+                }));
                 this.#profileView.showSuccess('Perfil atualizado com sucesso!');
             } else {
                 this.#profileView.showError(result.error || 'Erro ao atualizar perfil.');
