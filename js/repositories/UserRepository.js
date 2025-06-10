@@ -1,9 +1,16 @@
 export class UserRepository {
-    #baseUrl = 'https://mini-twitter-api-vy9q.onrender.com/api/users';
+    /**
+     * @type {string}
+     */
+    baseUrl;
+
+    constructor(baseUrl) {
+        this.baseUrl = baseUrl;
+    }
 
     async getProfile(token) {
         try {
-            const res = await fetch(`${this.#baseUrl}/profile`, {
+            const res = await fetch(`${this.baseUrl}/profile`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!res.ok) return { ok: false, error: 'Erro ao buscar perfil.' };
@@ -16,7 +23,7 @@ export class UserRepository {
 
     async updateProfile(token, username, email) {
         try {
-            const res = await fetch(`${this.#baseUrl}/profile`, {
+            const res = await fetch(`${this.baseUrl}/profile`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -44,6 +44,36 @@ export class PostRepository {
         };
     }
 
+    async fetchMyPosts(token) {
+        const response = await fetch(`${this.baseUrl}/my-posts`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            const result = {
+                ok: false
+            };
+
+            if (response.status === 401) {
+                result.error = 'Token inválido ou expirado';
+            } else if (response.status === 500) {
+                result.error = 'Erro interno do servidor';
+            } else {
+                result.error = 'Erro desconhecido';
+            }
+
+            return result;
+        }
+
+        return {
+            ok: true,
+            posts: await response.json()
+        };
+    }
+
     async fetchAllPostsResponseSize(token) {
         const response = await fetch(this.baseUrl, {
             method: 'HEAD',
