@@ -1,14 +1,28 @@
-import { AuthController } from "./controllers/AuthController.js";
-import { PostController } from "./controllers/PostController.js";
-import { StorageRepository } from "./repositories/StorageRepository.js";
+import AuthController from "./controllers/AuthController.js";
+import FeedController from "./controllers/FeedController.js";
+import ControllerManager from "./ControllerManager.js";
 
-const app = document.querySelector('#root');
-const storageRepository = new StorageRepository();
+/**
+ * Inicializa a aplicação Mini-Twitter.
+ * Responsável por registrar controladores e renderizar a view inicial.
+ *
+ * @function initializeApp
+ * @param {HTMLElement} root - Elemento raiz da aplicação.
+ */
+function initializeApp(root) {
+    const authController = new AuthController(root);
+    const feedController = new FeedController(root);
 
-if (storageRepository.getItem('token')) {
-    const postController = new PostController(app);
-    postController.showFeedView();
-} else {
-    const authController = new AuthController(app);
-    authController.showLoginView();
+    ControllerManager.registerController("auth", authController);
+    ControllerManager.registerController("feed", feedController);
+
+    if (!authController.isLoggedIn()) {
+        authController.views.login.render();
+    } else {
+        feedController.views.feed.render();
+    }
 }
+
+// Ponto de entrada da aplicação
+const root = document.querySelector("#root");
+initializeApp(root);

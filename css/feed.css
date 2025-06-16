@@ -1,0 +1,298 @@
+/*
+ * feed.css
+ *
+ * Estilos para o feed de posts do Mini-Twitter.
+ * Cada bloco está documentado para facilitar manutenção e entendimento.
+ */
+
+/*
+ * .add-post
+ * Formulário para adicionar novo post, com fundo branco, bordas suaves e sombra.
+ * Inclui textarea para conteúdo e rodapé com contador de caracteres e botão de ação.
+ */
+.feed .add-post {
+    background-color: #fff;
+    padding: 1.5rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px; /* Bordas mais suaves */
+    margin: 2rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    /* Efeito ao passar o mouse no formulário */
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Textarea para digitar o post */
+    & textarea {
+        min-height: 3rem;
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e6e6e6;
+        border-radius: 8px;
+        resize: vertical;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Textarea focado */
+    & textarea:focus {
+        outline: none;
+        border-color: #00adb5;
+        box-shadow: 0 0 5px rgba(0, 173, 181, 0.5);
+    }
+
+    /* Rodapé do formulário: contador de caracteres e botão */
+    & .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & .char-count {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        & .action {
+            background-color: #00adb5;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        & .action:hover {
+            background-color: #008d7d;
+            transform: translateY(-2px);
+        }
+    }
+}
+
+/*
+ * .posts
+ * Lista de posts exibidos no feed, com espaçamento entre eles.
+ */
+.feed .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    
+    /* Wrapper para spinner de carregamento */
+    & .spinner-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    /* Mensagem quando não há posts */
+    & .no-posts {
+        color: #888;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    /*
+     * .post
+     * Card de post individual, com fundo branco, bordas suaves e sombra.
+     */
+    & .post {
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        /* Cabeçalho do post: usuário, data, etc. */
+        & .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+            flex-wrap: wrap;
+
+            & .user {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                & .icon {
+                    font-size: 1rem;
+                    color: #00adb5;
+                }
+
+                & .info {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+                    overflow: hidden;
+
+                    .username {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 200px;
+                    }
+
+                    & .separator {
+                        font-size: 0.85rem;
+                        color: #888;
+                    }
+
+                    & .created-at {
+                        font-size: 0.85rem;
+                        color: #888;
+                        display: flex;
+                        align-items: center;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+
+        /* Conteúdo do post */
+        & .content {
+            font-size: 1.05rem;
+            color: #222;
+            word-break: break-word;
+        }
+
+        /* Ações do post (ex: deletar) */
+        & .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0.5rem;
+
+            & .action {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1.2rem;
+                transition: color 0.3s, transform 0.2s, background-color 0.2s;
+                padding: 0.4rem 0.6rem;
+                border-radius: 6px;
+            }
+
+            /* Botão de deletar post */
+            & .action[data-action="delete-post"] {
+                color: #a94442;
+            }
+
+            & .action[data-action="delete-post"]:active {
+                transform: scale(1);
+                background-color: #c9302c;
+            }
+
+            & .action[data-action="delete-post"]:disabled {
+                color: #ccc;
+                cursor: not-allowed;
+                background-color: transparent;
+            }
+
+            & .action[data-action="delete-post"]:focus-visible {
+                outline: 2px solid #d9534f;
+                outline-offset: 2px;
+            }
+
+            & .action[data-action="delete-post"]:hover, .action[data-action="delete-post"]:focus {
+                color: #e6e6e6;
+                background-color: #d9534f;
+                transform: scale(1.05);
+                outline: none;
+            }
+        }
+    }
+
+    /* Efeito ao passar o mouse no card do post */
+    & .post:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/*
+ * .error-message
+ * Mensagem de erro exibida no feed, com destaque de cor e botão de ação.
+ */
+.feed .error-message {
+    background-color: #fdecea;
+    border: 1px solid #f5c2c0;
+    border-radius: 8px;
+    color: #a94442;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+
+    & p {
+        padding: 1rem 1rem;
+    }
+
+    & .action {
+        color: #fff;
+        background-color: #a94442;
+        border: 1px solid transparent;
+        border-radius: 8px; /* Aumentado para maior suavidade */
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s,
+            transform 0.2s;
+    }
+
+    & .action:hover {
+        background-color: #922d2d;
+    }
+}
+
+/*
+ * Responsividade para telas pequenas (mobile)
+ * Ajusta layout do cabeçalho do post, ações e tamanhos para melhor visualização em dispositivos móveis.
+ */
+@media (max-width: 480px) {
+  .feed .posts .post .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .feed .posts .post .header .user {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .feed .posts .post .header .user .info {
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+
+  .feed .posts .post .header .user .username  {
+    max-width: 100%;
+  }
+
+  .feed .posts .post .actions {
+    align-self: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  .feed .posts .post .actions .action {
+    font-size: 1.6rem;
+    padding: 10px;
+  }
+}
+
+/*
+ * Responsividade para textarea do formulário de post em telas médias e acima.
+ */
+@media (min-width: 768px) {
+    .feed .add-post textarea {
+        font-size: 1.1rem;
+    }
+}

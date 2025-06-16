@@ -1,167 +1,138 @@
-export class PostRepository {
+/**
+ * Repositório responsável por operações relacionadas a posts no Mini-Twitter.
+ * Fornece métodos para buscar, criar e deletar posts, realizando requisições HTTP para a API.
+ *
+ * @class PostRepository
+ * @property {string} baseUrl - URL base da API de posts.
+ */
+export default class PostRepository {
     /**
-     * @type {string}
+     * Cria uma instância do PostRepository.
+     * @param {string} baseUrl - URL base da API.
      */
-    baseUrl;
-
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
     }
 
     /**
      * Obtém todos os posts publicados.
-     * @param {string} token 
-     * @return {Promise<{ok: false, error: string} | {ok: true, posts: object[]}>}
+     * @param {string} token - Token de autenticação.
+     * @returns {Promise<{ok: false, error: string} | {ok: true, posts: object[]}>}
      */
     async fetchAllPosts(token) {
-        const response = await fetch(this.baseUrl, {
+        return this.#request({
+            endpoint: '',
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+            token,
+            errorMessages: {
+                401: 'Token inválido ou expirado',
+                500: 'Erro interno do servidor',
+                default: 'Erro desconhecido'
+            },
+            parseJson: true
         });
-
-        if (!response.ok) {
-            const result = {
-                ok: false
-            };
-
-            if (response.status === 401) {
-                result.error = 'Token inválido ou expirado';
-            } else if (response.status === 500) {
-                result.error = 'Erro interno do servidor';
-            } else {
-                result.error = 'Erro desconhecido';
-            }
-
-            return result;
-        }
-
-        return {
-            ok: true,
-            posts: await response.json(),
-            size: response.headers.get('Content-Length')
-        };
     }
 
+    /**
+     * Obtém todos os posts do usuário autenticado.
+     * @param {string} token - Token de autenticação.
+     * @returns {Promise<{ok: false, error: string} | {ok: true, posts: object[]}>}
+     */
     async fetchMyPosts(token) {
-        const response = await fetch(`${this.baseUrl}/my-posts`, {
+        return this.#request({
+            endpoint: '/my-posts',
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+            token,
+            errorMessages: {
+                401: 'Token inválido ou expirado',
+                500: 'Erro interno do servidor',
+                default: 'Erro desconhecido'
+            },
+            parseJson: true
         });
-
-        if (!response.ok) {
-            const result = {
-                ok: false
-            };
-
-            if (response.status === 401) {
-                result.error = 'Token inválido ou expirado';
-            } else if (response.status === 500) {
-                result.error = 'Erro interno do servidor';
-            } else {
-                result.error = 'Erro desconhecido';
-            }
-
-            return result;
-        }
-
-        return {
-            ok: true,
-            posts: await response.json()
-        };
     }
 
-    async fetchAllPostsResponseSize(token) {
-        const response = await fetch(this.baseUrl, {
-            method: 'HEAD',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            const result = {
-                ok: false
-            };
-
-            if (response.status === 401) {
-                result.error = 'Token inválido ou expirado';
-            } else if (response.status === 500) {
-                result.error = 'Erro interno do servidor';
-            } else {
-                result.error = 'Erro desconhecido';
-            }
-
-            return result;
-        }
-
-        return {
-            ok: true,
-            size: response.headers.get('Content-Length'),
-        };
-    }
-
+    /**
+     * Cria um novo post.
+     * @param {string} token - Token de autenticação.
+     * @param {string} content - Conteúdo do post.
+     * @returns {Promise<{ok: false, error: string} | {ok: true, post: object}>}
+     */
     async createPost(token, content) {
-        const response = await fetch(this.baseUrl, {
+        return this.#request({
+            endpoint: '',
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+            token,
+            body: { content },
+            errorMessages: {
+                401: 'Token inválido ou expirado',
+                500: 'Erro interno do servidor',
+                default: 'Erro desconhecido'
             },
-            body: JSON.stringify({ content })
+            parseJson: true,
+            responseKey: 'post'
         });
-
-        if (!response.ok) {
-            const result = {
-                ok: false
-            };
-
-            if (response.status === 401) {
-                result.error = 'Token inválido ou expirado';
-            } else if (response.status === 500) {
-                result.error = 'Erro interno do servidor';
-            } else {
-                result.error = 'Erro desconhecido';
-            }
-
-            return result;
-        }
-
-        return {
-            ok: true,
-            post: await response.json()
-        };
     }
 
+    /**
+     * Deleta um post pelo ID.
+     * @param {string} token - Token de autenticação.
+     * @param {string} postId - ID do post a ser deletado.
+     * @returns {Promise<{ok: false, error: string} | {ok: true}>}
+     */
     async deletePost(token, postId) {
-        const response = await fetch(`${this.baseUrl}/${postId}`, {
+        return this.#request({
+            endpoint: `/${postId}`,
             method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
+            token,
+            errorMessages: {
+                401: 'Token inválido ou expirado',
+                404: 'Não foi possível encontrar ou excluir o post',
+                500: 'Erro interno do servidor',
+                default: 'Erro desconhecido'
+            }
+        });
+    }
+
+    /**
+     * Método privado para realizar requisições HTTP e tratar respostas e erros.
+     * @private
+     * @param {object} options - Opções da requisição.
+     * @param {string} options.endpoint - Endpoint relativo à baseUrl.
+     * @param {string} options.method - Método HTTP.
+     * @param {string} options.token - Token de autenticação.
+     * @param {object} [options.body] - Corpo da requisição (para POST).
+     * @param {object} options.errorMessages - Mapeamento de códigos de status para mensagens de erro.
+     * @param {boolean} [options.parseJson] - Se deve fazer o parse do JSON da resposta.
+     * @param {string} [options.responseKey] - Chave do objeto de resposta para parse customizado.
+     * @returns {Promise<object>} Resultado da requisição.
+     */
+    async #request({ endpoint, method, token, body, errorMessages, parseJson, responseKey }) {
+        const headers = { 'Authorization': `Bearer ${token}` };
+        if (body) headers['Content-Type'] = 'application/json';
+        const response = await fetch(`${this.baseUrl}${endpoint}`, {
+            method,
+            headers,
+            ...(body && { body: JSON.stringify(body) })
         });
 
         if (!response.ok) {
-            const result = {
-                ok: false
-            };
-
-            if (response.status === 401) {
-                result.error = 'Token inválido ou expirado';
-            } else if (response.status === 404) {
-                result.error = 'Não foi possível encontrar ou excluir o post';
-            } else if (response.status === 500) {
-                result.error = 'Erro interno do servidor';
-            } else {
-                result.error = 'Erro desconhecido';
-            }
-
-            return result;
+            const error = errorMessages[response.status] || errorMessages.default || 'Erro desconhecido';
+            return { ok: false, error };
         }
 
-        return { ok: true };
+        const result = { ok: true };
+
+        if (parseJson) {
+            const data = await response.json();
+            if (responseKey) {
+                result[responseKey] = data;
+            } else if (Array.isArray(data)) {
+                result.posts = data;
+            } else {
+                Object.assign(result, data);
+            }
+        }
+        return result;
     }
 }

@@ -1,10 +1,24 @@
-/* Reset básico */
+/*
+ * reset.css
+ *
+ * Este arquivo aplica um reset básico para garantir consistência visual entre diferentes navegadores.
+ * Cada regra é documentada abaixo para esclarecer seu propósito.
+ */
+
+/*
+ * Remove margens e paddings padrões de todos os elementos e define box-sizing para border-box,
+ * facilitando o controle de tamanhos e espaçamentos.
+ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/*
+ * Remove margens e paddings do body e html, define fonte padrão e aplica um fundo gradiente.
+ * Garante que o layout ocupe toda a altura da viewport.
+ */
 body, html {
   margin: 0;
   padding: 0;
@@ -13,15 +27,25 @@ body, html {
   height: 100%;
 }
 
+/*
+ * Remove marcadores de listas não ordenadas e ordenadas.
+ */
 ul, ol {
     list-style: none;
 }
 
+/*
+ * Remove sublinhado e herda cor para todos os links.
+ */
 a {
     text-decoration: none;
     color: inherit;
 }
 
+/*
+ * Remove estilos padrões de botões, inputs, selects e textareas,
+ * herdando a fonte do elemento pai e removendo borda, outline e fundo.
+ */
 button, input, select, textarea {
     font: inherit;
     border: none;
@@ -29,6 +53,9 @@ button, input, select, textarea {
     background: none;
 }
 
+/*
+ * Garante que imagens nunca ultrapassem o tamanho do container e sejam exibidas como blocos.
+ */
 img {
     max-width: 100%;
     display: block;

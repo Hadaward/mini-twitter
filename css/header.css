@@ -1,0 +1,91 @@
+/*
+ * header.css
+ *
+ * Estilos para o cabeçalho do Mini-Twitter.
+ * Cada bloco está documentado para facilitar manutenção e entendimento.
+ */
+
+/*
+ * .header
+ * Container principal do cabeçalho, com fundo branco, borda inferior e sombra sutil.
+ */
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+/*
+ * .header-wrapper
+ * Flex container para alinhar logo e ações do usuário nas extremidades.
+ */
+header .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    /*
+     * .logo
+     * Logo do Mini-Twitter, com destaque de cor e peso.
+     */
+    & .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #00adb5; /* Verde-água */
+        letter-spacing: 0.5px;
+    }
+
+    /*
+     * .user-actions
+     * Container para botões de ação do usuário (ex: login, logout, perfil).
+     */
+    & .user-actions {
+        display: flex;
+        gap: 0.5rem;
+
+        /*
+         * .action
+         * Botão de ação do usuário, com borda arredondada, cor de destaque e transições suaves.
+         */
+        & .action {
+            background-color: #fff;
+            border: 1px solid #00adb5; /* Verde-água */
+            border-radius: 8px; /* Aumentado para maior suavidade */
+            padding: 8px 12px;
+            font-size: 0.95rem;
+            color: #00adb5;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s,
+                transform 0.2s;
+        }
+
+        /* Hover do botão de ação */
+        & .action:hover {
+            background-color: #008d7d; /* Tom mais escuro do verde-água */
+            color: #fff;
+        }
+    }
+}
+
+/*
+ * Responsividade para telas médias (tablets e acima): aumenta tamanho da logo e botões.
+ */
+@media (min-width: 768px) {
+    header .header-wrapper .logo {
+        font-size: 2rem;
+    }
+    header .header-wrapper .user-actions .action {
+        padding: 10px 16px;
+        font-size: 1rem;
+    }
+}
+
+/*
+ * Responsividade para telas pequenas (mobile): reduz tamanho da logo.
+ */
+@media (max-width: 480px) {
+    header .header-wrapper .logo {
+        font-size: 1.4rem;
+    }
+}

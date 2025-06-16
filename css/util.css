@@ -1,0 +1,86 @@
+/*
+ * util.css
+ *
+ * Este arquivo contém classes utilitárias para estilização rápida e reutilizável de elementos na aplicação Mini-Twitter.
+ * Cada classe é documentada abaixo para facilitar o uso e manutenção.
+ */
+
+/*
+ * .hidden
+ * Esconde completamente o elemento do layout e da visualização.
+ * Útil para alternar visibilidade sem remover o elemento do DOM.
+ */
+.hidden {
+    display: none;
+}
+
+/*
+ * .separator-hr
+ * Cria uma linha horizontal separadora com estilo sutil.
+ */
+.separator-hr {
+  border: none;
+  border-top: 1px solid #e6e6e6;
+  margin: 0.5rem 0;
+}
+
+/*
+ * .spinner
+ * Exibe um indicador de carregamento circular animado.
+ * Pode ser customizado via a variável CSS --spinner-color.
+ * Usado para indicar operações assíncronas em andamento.
+ */
+.spinner {
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--spinner-color, #00adb5);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+/*
+ * Animação para o spinner.
+ * Rotaciona o elemento 360 graus continuamente.
+ */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*
+ * .container-sm
+ * Container de largura reduzida, ideal para formulários ou caixas pequenas.
+ * Limita a largura máxima a 400px.
+ */
+.container-sm {
+    width: 100%;
+    max-width: 400px;
+}
+
+/*
+ * .container-md
+ * Container de largura média, centralizado e com padding lateral.
+ * Limita a largura máxima a 800px.
+ */
+.container-md {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/*
+ * Responsividade para .container-sm
+ * Em telas muito pequenas, ocupa toda a largura da viewport.
+ */
+@media (max-width: 480px) {
+    .container-sm {
+        width: 100vw;
+        max-width: none;
+    }
+}

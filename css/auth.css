@@ -1,0 +1,181 @@
+/*
+ * auth.css
+ *
+ * Estilos para telas de autenticação (login/cadastro) do Mini-Twitter.
+ * Cada bloco está documentado para facilitar manutenção e entendimento.
+ */
+
+/*
+ * .auth-wrapper
+ * Container principal centralizado vertical e horizontalmente, ocupando toda a altura da viewport.
+ */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*
+ * .auth-logo
+ * Logo centralizado acima do formulário de autenticação.
+ */
+.auth-wrapper .auth-logo {
+    width: 80px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+/*
+ * .auth-title
+ * Título principal da tela de autenticação, com destaque de cor e sombra.
+ */
+.auth-wrapper .auth-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00adb5;
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 0 white;
+}
+
+/*
+ * .auth-form
+ * Formulário de autenticação centralizado, com fundo branco, bordas arredondadas e sombra.
+ * Utiliza flexbox para espaçamento vertical entre campos.
+ */
+.auth-wrapper .auth-form {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/*
+ * .auth-field
+ * Agrupa label e input de cada campo do formulário, com espaçamento vertical.
+ */
+.auth-wrapper .auth-form .auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    /* Label do campo */
+    & label {
+        font-size: 0.95rem;
+        color: #444;
+        font-weight: 500;
+    }
+
+    /* Input do campo */
+    & input {
+        padding: 0.75rem 1rem;
+        border: 1px solid #d3e2ed;
+        border-radius: 8px;
+        background: #f9fbfc;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Input focado */
+    & input:focus {
+        border-color: #00adb5;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 173, 181, 0.2);
+        background: #fff;
+    }
+}
+
+/*
+ * .auth-submit
+ * Botão de envio do formulário, com destaque de cor e transições para hover e disabled.
+ */
+.auth-wrapper .auth-form .auth-submit {
+    background: #00adb5;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 0.9rem 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Hover do botão de envio */
+.auth-wrapper .auth-form .auth-submit:hover {
+    background: #008d7d;
+}
+
+/* Botão de envio desabilitado */
+.auth-wrapper .auth-form .auth-submit:disabled {
+    background: #d3e2ed;
+    cursor: not-allowed;
+}
+
+/*
+ * .auth-error
+ * Exibe mensagens de erro de autenticação, centralizadas e em destaque.
+ */
+.auth-wrapper .auth-form .auth-error {
+    color: #e0245e;
+    font-size: 1rem;
+    min-height: 1.2em;
+    text-align: center;
+}
+
+/*
+ * .auth-alt-action
+ * Área para ações alternativas (ex: trocar entre login/cadastro), centralizada.
+ * O botão recebe destaque de cor e efeito ao passar o mouse.
+ */
+.auth-wrapper .auth-form .auth-alt-action {
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: -0.5rem;
+
+    & button {
+        background: none;
+        color: #00adb5;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    & button:hover {
+        color: #008d7d;
+        text-decoration: underline;
+    }
+}
+
+/*
+ * Responsividade para telas pequenas (mobile)
+ * Reduz tamanho do logo, título e ajusta o formulário para ocupar toda a largura.
+ */
+@media (max-width: 480px) {
+    .auth-wrapper .auth-logo {
+        width: 40px;
+    }
+    
+    .auth-wrapper .auth-title {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .auth-wrapper .auth-form {
+        border-radius: 0;
+        padding: 1.5rem 1.2rem;
+        box-shadow: none;
+        gap: 1.2rem;
+    }
+
+    .auth-wrapper .auth-form .auth-submit {
+        font-size: 1rem;
+    }
+}
