@@ -37,6 +37,12 @@
     background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
 }
 
+.auth-logo {
+    width: 80px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
 .auth-title {
     font-size: 2.5rem;
     font-weight: bold;
@@ -133,6 +139,23 @@
 .auth-alt-action button:hover {
     color: #008d7d;
     text-decoration: underline;
+}
+
+.auth-credits {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.auth-credits a {
+    color: #888;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.auth-credits a:hover {
+    color: #00adb5;
 }
 
 @media (max-width: 480px) {

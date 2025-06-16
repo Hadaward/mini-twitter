@@ -51,6 +51,7 @@ export class LoginView {
     render() {
         this.controller.container.innerHTML = `
             <main class="auth-container">
+                <img src="assets/twitter.png" alt="Logo Twitter" class="auth-logo">
                 <h1 class="auth-title">Entrar no Mini Twitter</h1>
                 <form class="auth-form">
                     <div class="auth-field">
@@ -67,6 +68,13 @@ export class LoginView {
                         <p>Não tem uma conta? <button type="button" id="go-register">Registrar</button></p>
                     </div>
                 </form>
+                <footer class="auth-credits">
+                    <small>
+                        <a href="https://www.flaticon.com/br/icones-gratis/twitter" target="_blank" rel="noopener noreferrer" title="twitter ícones">
+                            Twitter ícones criados por Pixel perfect - Flaticon
+                        </a>
+                    </small>
+                </footer>
             </main>
         `;
 
