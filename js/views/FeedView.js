@@ -110,7 +110,7 @@ export default class FeedView {
         });
 
         this.container.querySelector('.action[data-action="view-profile"]').addEventListener('click', async () => {
-            await ControllerManager.getController("profile").showProfile();
+            await ControllerManager.getController("profile").views.profile.render();
         });
 
         this.container.querySelector('.action[data-action="publish-post"]').addEventListener('click', this.#onPublishPost.bind(this));

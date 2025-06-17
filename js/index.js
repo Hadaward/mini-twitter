@@ -1,6 +1,7 @@
 import AuthController from "./controllers/AuthController.js";
 import FeedController from "./controllers/FeedController.js";
 import ControllerManager from "./ControllerManager.js";
+import ProfileController from "./controllers/ProfileController.js";
 
 /**
  * Inicializa a aplicação Mini-Twitter.
@@ -15,6 +16,7 @@ function initializeApp(root) {
 
     ControllerManager.registerController("auth", authController);
     ControllerManager.registerController("feed", feedController);
+    ControllerManager.registerController("profile", new ProfileController(root));
 
     if (!authController.isLoggedIn()) {
         authController.views.login.render();
